@@ -19,7 +19,7 @@ public class UsersController : ControllerBase
 
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
-        return await this.context.Users.ToListAsync();
+        return await context.Users.ToListAsync();
     }
 
 
@@ -27,7 +27,7 @@ public class UsersController : ControllerBase
 
     public async Task<ActionResult<AppUser>> GetUser(int id)
     {
-        return await this.context.Users.FindAsync(id);
+        return await context.Users.FindAsync(id);
     }
 
 }
