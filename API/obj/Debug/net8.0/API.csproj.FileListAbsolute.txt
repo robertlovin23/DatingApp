@@ -121,3 +121,11 @@
 /Users/robertlovinbloom/Code/DatingApp/API/bin/Debug/net8.0/runtimes/win-x64/native/e_sqlite3.dll
 /Users/robertlovinbloom/Code/DatingApp/API/bin/Debug/net8.0/runtimes/win-x86/native/e_sqlite3.dll
 /Users/robertlovinbloom/Code/DatingApp/API/obj/Debug/net8.0/API.sourcelink.json
+/Users/robertlovinbloom/Code/DatingApp/API/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/Users/robertlovinbloom/Code/DatingApp/API/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/Users/robertlovinbloom/Code/DatingApp/API/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/Users/robertlovinbloom/Code/DatingApp/API/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+/Users/robertlovinbloom/Code/DatingApp/API/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+/Users/robertlovinbloom/Code/DatingApp/API/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/robertlovinbloom/Code/DatingApp/API/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+/Users/robertlovinbloom/Code/DatingApp/API/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
