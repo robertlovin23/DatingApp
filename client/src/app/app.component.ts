@@ -1,11 +1,9 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 import { UsersService } from './users.service';
 import { Subscription } from 'rxjs';
-
-interface User{
-  id: number;
-  name: string;
-}
+import { AccountService } from './account.service';
+import { User } from './models/user';
+import { UserList } from './models/userList';
 
 @Component({
   selector: 'app-root',
@@ -13,19 +11,26 @@ interface User{
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit{
-  users: any = [];
+
   subscription: Subscription;
   userService: UsersService;
+  accountService: AccountService;
 
-  constructor(userService: UsersService){
+  constructor(userService: UsersService, accountService: AccountService){
     this.userService = userService;
+    this.accountService = accountService;
   }
 
   ngOnInit(){
-    this.subscription = this.userService.getUsersChangedObservable().subscribe((users) => {
-       this.users = users;
-    });
-    this.userService.grabUsers();
+      this.setCurrentUser();
+  }
+
+  setCurrentUser(){
+    const userString = localStorage.getItem('user');
+    if(!userString) return;
+    const user: User = JSON.parse(userString);
+    console.log(user)
+    this.accountService.setCurrentUser(user);
   }
 
 }

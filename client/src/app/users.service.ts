@@ -1,17 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, Subject } from "rxjs";
-
-interface User{
-    id: number;
-    name: string;
-}
+import { UserList } from '../app/models/userList';
 
 @Injectable()
 export class UsersService{
-    users: User[] = [];
+    users: UserList[] = [];
     private http: HttpClient;
-    usersChanged = new Subject<User[]>();
+    usersChanged = new Subject<UserList[]>();
 
     constructor(http: HttpClient){
         this.http = http
@@ -19,7 +15,7 @@ export class UsersService{
 
 
     grabUsers(){
-        this.http.get<User[]>('http://localhost:5104/api/users').subscribe({
+        this.http.get<UserList[]>('http://localhost:5104/api/users').subscribe({
             next: (response) => {
                 this.users = response
                 this.usersChanged.next(this.users);
@@ -33,9 +29,8 @@ export class UsersService{
             }
         })
     }
-
       // Observable to subscribe to changes in the users array
-  getUsersChangedObservable(): Observable<User[]> {
+  getUsersChangedObservable(): Observable<UserList[]> {
     return this.usersChanged.asObservable();
   }
 }
