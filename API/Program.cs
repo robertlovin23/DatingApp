@@ -7,30 +7,53 @@ using API.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using API.Middleware;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.Services.AddDbContext<DataContext>(opt =>
+internal class Program
 {
-    opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
-});
+    private static async Task Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddDbContext<DataContext>(opt =>
+        {
+            opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
+        });
 
-// Add services to the container.
-builder.Services.AddApplicationServices(builder.Configuration);
-builder.Services.AddIdentityServices(builder.Configuration);
+        // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+        builder.Services.AddEndpointsApiExplorer();
 
-var app = builder.Build();
+        // Add services to the container.
+        builder.Services.AddApplicationServices(builder.Configuration);
+        builder.Services.AddIdentityServices(builder.Configuration);
 
-app.UseHttpsRedirection();
+        var app = builder.Build();
 
-app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod()
-    .WithOrigins("https://localhost:4200"));
+        app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapControllers();
+        app.UseMiddleware<ExceptionMiddleware>();
 
-app.Run();
+        app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod()
+            .WithOrigins("https://localhost:4200"));
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.MapControllers();
+
+        using var scope = app.Services.CreateScope();
+        var services = scope.ServiceProvider;
+        try
+        {
+            var context = services.GetRequiredService<DataContext>();
+            await context.Database.MigrateAsync();
+            await Seed.SeedUsers(context);
+        }
+        catch (Exception ex)
+        {
+            var logger = services.GetService<ILogger<Program>>();
+            logger.LogError(ex, "An error occured during migration");
+        };
+
+        app.Run();
+    }
+}

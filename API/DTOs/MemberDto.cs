@@ -1,8 +1,8 @@
-using API.Extensions;
+using System.ComponentModel.DataAnnotations;
 
-namespace API.Entites;
+namespace API.DTOs;
 
-public class AppUser
+public class MemberDto
 {
     public int Id { get; set; }
 
@@ -12,13 +12,15 @@ public class AppUser
 
     public byte[] PasswordSalt { get; set; }
 
-    public DateOnly DateOfBirth { get; set; }
+    public string PhotoUrl { get; set; }
+
+    public int Age { get; set; }
 
     public string KnownAs { get; set; }
 
-    public DateTime Created { get; set; } = DateTime.UtcNow;
+    public DateTime Created { get; set; }
 
-    public DateTime LastActive { get; set; } = DateTime.UtcNow;
+    public DateTime LastActive { get; set; }
 
     public string Gender { get; set; }
 
@@ -32,10 +34,5 @@ public class AppUser
 
     public string Country { get; set; }
 
-    public List<Photos> Photos { get; set; } = new();
-
-    // public int GetAge()
-    // {
-    //     return DateOfBirth.CaclulateAge();
-    // }
+    public List<PhotoDto> Photos { get; set; } = new();
 }
