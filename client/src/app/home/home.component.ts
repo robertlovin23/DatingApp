@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../users.service';
+import { UsersService } from '../_services/users.service';
 import { UserList } from '../models/userList';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
   registerMode = false;
@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.grabUsers();
   }
 
   registerToggle(){

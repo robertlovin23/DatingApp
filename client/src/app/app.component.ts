@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
-import { UsersService } from './users.service';
+import { UsersService } from './_services/users.service';
 import { Subscription } from 'rxjs';
-import { AccountService } from './account.service';
+import { AccountService } from './_services/account.service';
 import { User } from './models/user';
 import { UserList } from './models/userList';
 

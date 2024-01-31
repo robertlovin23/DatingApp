@@ -1,23 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription, of } from 'rxjs';
-import { AccountService } from '../account.service';
+import { AccountService } from '../_services/account.service';
 import { User } from '../models/user';
+import { Router } from '@angular/router';
+import { Toast, ToastrService } from 'ngx-toastr';
 
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   public accountService: AccountService;
   model: User = {username:'',password: ''};
   subscription: Subscription;
+  private router: Router;
+  toastr: ToastrService;
   loggedIn = false;
   currentUser$: Observable<User | null> = of(null);
 
-  constructor(accountService: AccountService) {
+  constructor(accountService: AccountService, router: Router, toastr: ToastrService) {
     this.accountService = accountService;
+    this.router = router;
+    this.toastr = toastr;
   }
 
   ngOnInit(){
@@ -29,14 +35,13 @@ export class HeaderComponent implements OnInit {
     return this.subscription = this.accountService.loginUser(this.model).subscribe({
       next: (response: any) => {
         console.log(response)
-      },
-      error: (err: any) => {
-        console.log(err)
+        this.router.navigateByUrl("/members")
       }
    });
   }
 
   logout(){
     this.accountService.logoutUser();
+    this.router.navigateByUrl("/")
    }
 }

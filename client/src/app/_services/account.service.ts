@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject, Observable, Subject, map } from "rxjs";
-import { User } from '../app/models/user';
+import { environment } from '../../environments/environment';
+import { User } from '../models/user';
 
 @Injectable()
 export class AccountService{
-    baseUrl = 'http://localhost:5104/api';
+    baseUrl = environment.baseUrl;
     private currentUserSource = new BehaviorSubject<User | null>(null);
     currentUser$ = this.currentUserSource;
 
@@ -44,7 +45,7 @@ export class AccountService{
         this.currentUserSource.next(user);
     }
 
-    logoutUser(){``
+    logoutUser(){
         localStorage.removeItem('user');
         this.currentUserSource.next(null);
     }
